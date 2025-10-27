@@ -1,5 +1,5 @@
 %------------------------------------------------------------------------------
-% [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
+% [maxTotalArea, maxOutflow, maxDepth] = runPond(ra, rb, La, Lb)
 %
 % Arguments:
 %   ra           Depth of head water.
@@ -34,7 +34,7 @@
 % 
 %------------------------------------------------------------------------------
 
-function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
+function [maxTotalArea, maxOutflow, maxDepth] = runPond(ra, rb, La, Lb)
     plot_output = false;
     dMax = 2.7; % [m]
     dMin = 1; % [m]
@@ -139,3 +139,4 @@ function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
     fprintf('Max Outflow (m^3/s): %.3f\n\n', maxOutflow);
 
 end
+
