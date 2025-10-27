@@ -35,7 +35,6 @@
 %------------------------------------------------------------------------------
 
 function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
-    tic
     plot_output = false;
     dMax = 2.7; % [m]
     dMin = 1; % [m]
@@ -75,15 +74,11 @@ function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
     maxOutflow = max(Qoutb); 
     
     % Maximum total combined surface area (TotalArea = A_a + A_b)
-    TotalArea = AreaA + AreaB;
-    maxTotalArea = max(TotalArea);
-
-    toc
+    maxTotalArea = max(AreaA) + max(AreaB);
 
     
     % --- 2. Generate Graphical Output ---
     if plot_output
-        tic
         figure; % Open a new figure window
 
         % Plot 1 (Location 1: Upper-Left) Flow vs. Time
@@ -106,7 +101,8 @@ function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
         ylabel('Depth [m]');
         legend('Pond \alpha Depth', 'Pond \beta Depth', 'Location', 'northeast');
         % Add a line at D=1m (minimum depth) for reference
-        yline(1.0, 'k:');
+        yline(1.0, 'k:'); hold on;
+        hold off;
         grid on;
 
         % Plot 3 (Location 3: Lower-Left) Surface Area vs. Time
@@ -129,10 +125,6 @@ function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
         legend('Pond \alpha Volume', 'Pond \beta Volume', 'Location', 'northeast');
         grid on;
 
-        % % Adjust figure size for better viewing
-        % set(gcf, 'Position', [100, 100, 800, 600]);
-
-        toc
     end
 
     % Check for valid design
@@ -141,5 +133,9 @@ function [maxTotalArea, maxOutflow, maxDepth] = solvePond(ra, rb, La, Lb)
     catch
         % If no function is found, do nothing
     end
+    
+    fprintf('\nMax Total Area (m^2): %.3f\n', maxTotalArea);
+    fprintf('Max Depth (m):   [%.3f, %.3f]\n', maxDepth(1), maxDepth(2));
+    fprintf('Max Outflow (m^3/s): %.3f\n\n', maxOutflow);
 
 end
